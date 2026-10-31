@@ -18,17 +18,25 @@ g++ -std=c++23 -Wall -Wextra -pedantic main.cpp MessageInbox.cpp -o message_inbo
 I wrote comprehensive tests in main.cpp using standard assert() statements to automatically verify expected versus actual results. 
 
 **Empty operations:** Attempting to read or erase from an empty inbox successfully returned false without crashing. 
+
 **Duplicate and invalid arrivals:** receive() correctly rejected ID 0, empty strings, and duplicate IDs (returning false and making no state changes).
+
 **Unchanged failed-read output:** When querying a missing ID, the passed-in TextMessage object remained completely unchanged.
+
 **Budget Boundaries:** Confirmed that a 5-byte inbox accepted exactly a 5-byte message, but rejected a message that would push it to 6 bytes.
+
 **Repeated reading:** Verified that reading the same message multiple times leaves the budget exactly the same.
+
 **Changing snapshot copies:** Modifying the vector returned by messages() did not change the actual text stored inside the MessageInbox heap nodes.
+
 **Deletion at all positions:** Successfully deleted the head, the tail, and the only node, updating pointers properly in all cases.
+
 **Append after singleton deletion:** Confirmed that if the inbox drops to 0 messages, a subsequent receive() successfully rebuilds the head and tail pointers.
+
 **Clearing:** Calling clear() twice in a row did not crash. The inbox was successfully reused to store new messages afterward.
 
 ## Analysis Questions
-**Which pointers change when the first, last, or only message is deleted? Include diagrams.**
+**Which pointers change when the first, last, or only message is deleted? Include diagrams.** 
 When the first message is deleted, only the head pointer is changed to head->next. 
 Before: head -> [1] -> [2] <- tail
 After:  head -> [2] <- tail
