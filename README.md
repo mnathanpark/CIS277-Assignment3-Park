@@ -47,14 +47,17 @@ Calling clear() twice in a row did not crash. The inbox was successfully reused 
 ## Analysis Questions
 **Which pointers change when the first, last, or only message is deleted? Include diagrams.**
 When the first message is deleted, only the head pointer is changed to head->next
+
 Before: head -> [1] -> [2] <- tail | 
 After:  head -> [2] <- tail
 
 When the last message is deleted, only the tail pointer is changed to the second to last node
+
 Before: head -> [1] -> [2] <- tail | 
 After:  head -> [1] <- tail
 
 WHen the only message is deleted, both head and tail are set to null ptr
+
 Before: head -> [1] <- tail | 
 After:  head -> nullptr, tail -> nullptr
 
